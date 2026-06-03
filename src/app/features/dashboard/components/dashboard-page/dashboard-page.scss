@@ -1,0 +1,87 @@
+/* Table Container and Base Layout */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 20px 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #333333;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Row Styles */
+.table-row {
+  transition: background-color 0.2s ease-in-out;
+}
+
+.table-row:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.table-row:hover {
+  background-color: #f1f5f9;
+}
+
+/* Cell Styles */
+.table-row td {
+  padding: 14px 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+/* Remove bottom border from the last row */
+.table-row:last-child td {
+  border-bottom: none;
+}
+
+/* Column Specific Formatting & Alignments */
+.table-row td:nth-child(1) { /* Title */
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.table-row td:nth-child(2) { /* Description */
+  color: #64748b;
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table-row td:nth-child(3) { /* Category */
+  text-transform: capitalize;
+  font-size: 12px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.table-row td:nth-child(4) { /* Price */
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.table-row td:nth-child(5) { /* Discount */
+  color: #16a34a;
+  font-weight: 500;
+}
+
+.table-row td:nth-child(6) { /* Rating */
+  font-weight: 600;
+  color: #eab308;
+}
+
+.table-row td:nth-child(7) { /* Stock */
+  font-weight: 500;
+}
+
+/* Infinite Scroll Row Visual Cue */
+[appInfiniteScroll] {
+  position: relative;
+  border-bottom: 2px dashed #cbd5e1 !important;
+  background-color: #fdfdfd;
+}

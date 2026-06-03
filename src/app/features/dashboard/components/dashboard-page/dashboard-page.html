@@ -1,0 +1,39 @@
+<div class="main">
+  <input type="text" [formControl]="searchControl" placeholder="Search channel" />
+  <select [formControl]="categoryControl">
+    <option value="all">All Categories</option>
+    <option value="beauty">Beauty</option>
+    <option value="fragrances">Fragrances</option>
+    <option value="furniture">Furniture</option>
+    <option value="groceries">Groceries</option>
+    <option value="home-decoration">Home decoration</option>
+  </select>
+</div>
+
+<table class="table">
+  @if (metrics$ | async; as metrics) {
+    @for (metric of metrics; track metric.id; let isLast = $last) {
+      @if (isLast) {
+        <tr appInfiniteScroll (loadMore)="loadMore()" class="table-row">
+          <td>{{ metric.title }}</td>
+          <td>{{ metric.description }}</td>
+          <td>{{ metric.category }}</td>
+          <td>{{ metric.price }}</td>
+          <td>{{ metric.discountPercentage }}</td>
+          <td>{{ metric.rating }}</td>
+          <td>{{ metric.stock }}</td>
+        </tr>
+      } @else {
+        <tr class="table-row">
+          <td>{{ metric.title }}</td>
+          <td>{{ metric.description }}</td>
+          <td>{{ metric.category }}</td>
+          <td>{{ metric.price }}</td>
+          <td>{{ metric.discountPercentage }}</td>
+          <td>{{ metric.rating }}</td>
+          <td>{{ metric.stock }}</td>
+        </tr>
+      }
+    }
+  }
+</table>

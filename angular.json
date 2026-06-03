@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "streamhub-dashboard": {
+    "angular-dashboard": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "streamhub-dashboard:build:production"
+              "buildTarget": "angular-dashboard:build:production"
             },
             "development": {
-              "buildTarget": "streamhub-dashboard:build:development"
+              "buildTarget": "angular-dashboard:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -1,0 +1,124 @@
+{
+  "metrics": [
+    {
+      "id": 1,
+      "channel": "Netflix",
+      "country": "US",
+      "impressions": 1200
+    },
+    {
+      "id": 2,
+      "channel": "Hulu",
+      "country": "US",
+      "impressions": 800
+    },
+    {
+      "id": 3,
+      "channel": "Amazon Prime",
+      "country": "UK",
+      "impressions": 1500
+    },
+    {
+      "id": 4,
+      "channel": "Disney+",
+      "country": "CA",
+      "impressions": 900
+    },
+    {
+      "id": 5,
+      "channel": "HBO Max",
+      "country": "US",
+      "impressions": 1100
+    },
+    {
+      "id": 6,
+      "channel": "Apple TV+",
+      "country": "UK",
+      "impressions": 700
+    },
+    {
+      "id": 7,
+      "channel": "Peacock",
+      "country": "US",
+      "impressions": 600
+    },
+    {
+      "id": 8,
+      "channel": "Paramount+",
+      "country": "CA",
+      "impressions": 500
+    },
+    {
+      "id": 9,
+      "channel": "YouTube Premium",
+      "country": "US",
+      "impressions": 1300
+    },
+    {
+      "id": 10,
+      "channel": "Spotify",
+      "country": "UK",
+      "impressions": 400
+    },
+    {
+      "id": 11,
+      "channel": "Twitch",
+      "country": "US",
+      "impressions": 1400
+    },
+    {
+      "id": 12,
+      "channel": "TikTok",
+      "country": "CA",
+      "impressions": 1600
+    },
+    {
+      "id": 13,
+      "channel": "Instagram",
+      "country": "US",
+      "impressions": 1700
+    },
+    {
+      "id": 14,
+      "channel": "Facebook",
+      "country": "UK",
+      "impressions": 900
+    },
+    {
+      "id": 15,
+      "channel": "Twitter",
+      "country": "US",
+      "impressions": 800
+    },
+    {
+      "id": 16,
+      "channel": "LinkedIn",
+      "country": "CA",
+      "impressions": 300
+    },
+    {
+      "id": 17,
+      "channel": "Snapchat",
+      "country": "US",
+      "impressions": 1200
+    },
+    {
+      "id": 18,
+      "channel": "Reddit",
+      "country": "UK",
+      "impressions": 500
+    },
+    {
+      "id": 19,
+      "channel": "Pinterest",
+      "country": "US",
+      "impressions": 400
+    },
+    {
+      "id": 20,
+      "channel": "Quora",
+      "country": "CA",
+      "impressions": 200
+    }
+  ]
+}
