@@ -1,20 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {
-  scan,
-  skip,
-  debounceTime,
-  distinctUntilChanged,
-  startWith,
-  Subject,
-  switchMap,
-  tap,
-  combineLatest,
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap, takeUntil, Subject } from 'rxjs';
 import { AppInfiniteScroll } from '../../../../shared/directives/app-infinite-scroll';
-import { ProductService } from '../../services/product.service';
 import { AsyncPipe } from '@angular/common';
-import { Product } from '../../../products/models/product';
+import { Store } from '@ngrx/store';
+import { ProductActions } from '../../../products/store/product.actions';
+import { selectProducts } from '../../../products/store/product.selectors';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -23,57 +14,51 @@ import { Product } from '../../../products/models/product';
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.scss',
 })
-export class DashboardPage {
-  productService = inject(ProductService);
+export class DashboardPage implements OnInit, OnDestroy {
+  private store = inject(Store);
+  private destroy$ = new Subject<void>();
+
   searchControl = new FormControl('', { nonNullable: true });
   categoryControl = new FormControl('all', { nonNullable: true });
 
-  search$ = this.searchControl.valueChanges.pipe(
-    debounceTime(300),
-    distinctUntilChanged(),
-    startWith(''),
-  );
+  metrics$ = this.store.select(selectProducts);
 
-  category$ = this.categoryControl.valueChanges.pipe(distinctUntilChanged(), startWith('all'));
-
-  private loadMoreSubject = new Subject<void>();
-
-  loadMore$ = this.loadMoreSubject.asObservable();
-
-  filters$ = combineLatest([this.search$, this.category$]).pipe(
-    // skip the initial emission of combineLatest, since we already have startWith in both search$ and category$
-    tap(([search, category]) => {
-      console.log('filters changed:', { search, category });
-    }),
-  );
-
-  metrics$ = this.filters$.pipe(
-    switchMap(([search, category]) => {
-      return this.loadMore$.pipe(
-        startWith(void 0),
-
-        scan((page) => page + 20, -20),
-
-        switchMap((page) => {
-          if (search.trim() === '') {
-            if (category === 'all') {
-              return this.productService.getProducts(page);
-            } else {
-              return this.productService.getProductByCategory(category, page);
-            }
-          } else {
-            return this.productService.searchProducts(search, page);
-          }
+  ngOnInit() {
+    // Dispatch on search changes (only on user input, not initial value)
+    this.searchControl.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        tap((search) => {
+          console.log('search changed:', search);
+          this.store.dispatch(ProductActions.searchChanged({ search }));
         }),
-        scan((allMetrics, newMetrics) => {
-          newMetrics.map((metric) => console.log('new metric:', metric.category));
-          return [...allMetrics, ...newMetrics];
-        }, [] as Product[]),
-      );
-    }),
-  );
+        takeUntil(this.destroy$),
+      )
+      .subscribe();
+
+    // Dispatch on category changes (only on user input, not initial value)
+    this.categoryControl.valueChanges
+      .pipe(
+        distinctUntilChanged(),
+        tap((category) => {
+          console.log('category changed:', category);
+          this.store.dispatch(ProductActions.categoryChanged({ category }));
+        }),
+        takeUntil(this.destroy$),
+      )
+      .subscribe();
+
+    // Load initial products - dispatch searchChanged to trigger initial load with page: 1
+    this.store.dispatch(ProductActions.searchChanged({ search: '' }));
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   loadMore() {
-    this.loadMoreSubject.next();
+    this.store.dispatch(ProductActions.loadMore());
   }
 }
